@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">DetroitLabsChallenge</string>
+    <string name="bottom_nav_now">Now</string>
+    <string name="bottom_nav_places">Places</string>
+    <string name="bottom_nav_settings">Settings</string>
 </resources>
