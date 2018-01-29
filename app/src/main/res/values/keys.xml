@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Typically, you would add this file to the .gitignore -->
+<resources>
+    <string name="weather_underground_secret_key">f093651f31a93fd3</string>
+</resources>
