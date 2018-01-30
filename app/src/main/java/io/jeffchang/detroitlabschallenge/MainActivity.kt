@@ -3,6 +3,7 @@ package io.jeffchang.detroitlabschallenge
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.content.IntentSender
+import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -13,13 +14,11 @@ import com.google.android.gms.location.*
 import io.jeffchang.detroitlabschallenge.ui.now.NowFragment
 import io.jeffchang.detroitlabschallenge.ui.places.PlacesFragment
 import io.jeffchang.detroitlabschallenge.ui.settings.SettingsFragment
-import kotlinx.android.synthetic.main.activity_main.*
-import com.google.android.gms.location.LocationRequest
 import io.jeffchang.detroitlabschallenge.util.PermissionUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.internal.disposables.DisposableHelper.dispose
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 import timber.log.Timber
 
@@ -29,6 +28,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var settingsClient: SettingsClient
     private lateinit var locationSettingsRequest: LocationSettingsRequest
+    private lateinit var requestObject: PermissionUtil.PermissionRequestObject
+    private lateinit var locationDisposable: Disposable
+
+    var onGetLocationListener: ((location: Location) -> Unit)? = null
+
 
     private var requestingLocation = true
 
@@ -101,11 +105,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    private lateinit var requestObject: PermissionUtil.PermissionRequestObject
-
-    private lateinit var locationDisposable: Disposable
-
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         settingsClient.checkLocationSettings(locationSettingsRequest)
@@ -115,12 +114,8 @@ class MainActivity : AppCompatActivity() {
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({ location ->
-                                Toast.makeText(this, location?.latitude.toString(), Toast.LENGTH_LONG).show()
+                                onGetLocationListener?.invoke(location)
                             })
-
-//                    fusedLocationProviderClient.requestLocationUpdates(LocationRequest.create(),
-//                                        locationCallback, Looper.myLooper())
-
                 })
                 .addOnFailureListener { exception ->
                     when ((exception as ApiException).statusCode) {
@@ -143,6 +138,8 @@ class MainActivity : AppCompatActivity() {
         requestObject.onRequestPermissionsResult(requestCode, permissions, grantResults)
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+
+
 
     private fun stopLocationUpdates() {
         locationDisposable.dispose()
