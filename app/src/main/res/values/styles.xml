@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CustomExpandedAppBarTitle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/toolbarExpandedFontSize</item>
+    </style>
+
+    <style name="CustomCollapsedAppBarTitle" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/toolbarCollapsedFontSize</item>
+    </style>
+
+
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Global dimensions used throughout the app -->
-    <dimen name="toolbarTitleSize">25sp</dimen>
+    <dimen name="toolbarExpandedFontSize">23sp</dimen>
+    <dimen name="toolbarCollapsedFontSize">20sp</dimen>
 </resources>

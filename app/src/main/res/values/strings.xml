@@ -3,4 +3,9 @@
     <string name="bottom_nav_now">Now</string>
     <string name="bottom_nav_places">Places</string>
     <string name="bottom_nav_settings">Settings</string>
+
+    <!-- No Internet View -->
+    <string name="device_offline">You\'re offline</string>
+    <string name="try_again">Want to try again?</string>
+    <string name="disconnected">Disconnected</string>
 </resources>
