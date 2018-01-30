@@ -24,6 +24,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Google Play Services
+    implementation "com.google.android.gms:play-services-places:$google_play_version"
+    implementation "com.google.android.gms:play-services-location:$google_play_version"
+
+    // RxJava related libraries
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
+    implementation 'pl.charmas.android:android-reactive-location2:2.1'
+
+    // Retrofit related libraries
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation "com.squareup.retrofit2:converter-moshi:2.0.0"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$android_support_version"
     implementation "com.android.support:design:$android_support_version"

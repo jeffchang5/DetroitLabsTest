@@ -31,7 +31,6 @@ class PlacesFragment : BaseFragment() {
     private fun setCurrentDate() {
         val calendar = Calendar.getInstance()
         val sdf = SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault())
-        main_toolbar.title = sdf.format(calendar.time)
     }
     companion object {
         fun newInstance(): PlacesFragment {

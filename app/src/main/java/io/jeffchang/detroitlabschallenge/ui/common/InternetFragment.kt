@@ -23,7 +23,6 @@ abstract class InternetFragment : BaseFragment() {
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         val child = inflater.inflate(layoutResourceID, container, false)
         parent.addView(child)
-        failAndTryAgain(null)
         return parent
     }
 
