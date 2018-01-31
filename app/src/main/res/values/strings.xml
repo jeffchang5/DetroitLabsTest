@@ -8,4 +8,12 @@
     <string name="device_offline">You\'re offline</string>
     <string name="try_again">Want to try again?</string>
     <string name="disconnected">Disconnected</string>
+
+    <!-- Current Weather Fragment -->
+    <string name="celsius">%1$d℃</string>
+    <string name="fahrenheit">%1$d℉</string>
+    <string name="percent">%1$s%%</string>
+    <string name="kph">%1$skph</string>
+    <string name="wind">Wind</string>
+    <string name="rain">Rain</string>
 </resources>

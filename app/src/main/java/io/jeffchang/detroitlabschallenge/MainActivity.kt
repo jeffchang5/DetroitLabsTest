@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var settingsClient: SettingsClient
     private lateinit var locationSettingsRequest: LocationSettingsRequest
     private lateinit var requestObject: PermissionUtil.PermissionRequestObject
-    private lateinit var locationDisposable: Disposable
+    private var locationDisposable: Disposable? = null
 
     var onGetLocationListener: ((location: Location) -> Unit)? = null
 
@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-
         })
     }
 
@@ -114,6 +113,7 @@ class MainActivity : AppCompatActivity() {
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({ location ->
+                                Timber.d("HELLO")
                                 onGetLocationListener?.invoke(location)
                             })
                 })
@@ -139,10 +139,8 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-
-
     private fun stopLocationUpdates() {
-        locationDisposable.dispose()
+        locationDisposable?.dispose()
     }
 
     private fun switchFragments(fragment: Fragment) {

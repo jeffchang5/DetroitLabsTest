@@ -8,6 +8,7 @@
     <!-- Individual colors used elsewhere -->
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+    <color name="mute_grey">#ccc</color>
 
 
     <!--<color name="colorAccent">#FF4081</color>-->

@@ -9,7 +9,7 @@
     </style>
 
     <style name="CustomExpandedAppBarTitle" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/toolbarExpandedFontSize</item>
     </style>
 

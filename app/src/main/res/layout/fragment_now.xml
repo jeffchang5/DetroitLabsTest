@@ -23,7 +23,7 @@
             <FrameLayout
                 android:id="@+id/main_activity_current_weather"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:background="@color/black"
                 app:layout_collapseMode="parallax"/>
 
