@@ -2,13 +2,14 @@
 <resources>
     <!-- Global colors used throughout the app -->
     <color name="colorPrimary">#202D41</color>
-    <color name="colorPrimaryDark">#202D41</color>
+    <color name="colorPrimaryDark">#132034</color>
     <color name="colorAccent">#D0E3E4</color>
 
     <!-- Individual colors used elsewhere -->
     <color name="white">#FFF</color>
     <color name="black">#000</color>
     <color name="mute_grey">#ccc</color>
+    <color name="colorMuteBackground">#354154</color>
 
 
     <!--<color name="colorAccent">#FF4081</color>-->

@@ -23,13 +23,15 @@ class CurrentWeatherFragment: InternetFragment() {
 
     private val currentWeatherViewModel = DetroitLabsApplication.injectCurrentWeatherViewModel()
 
+    var currentWeatherCallback: ((currentObservation: CurrentObservation) -> Unit)? = null
+
     private fun onGetLocationFromActivity(location: Location) {
         currentWeatherViewModel
-                .getCurrentWeather(getString(R.string.weather_underground_secret_key),
-                        "${location.latitude},${location.longitude}")
+                .getCurrentWeather("${location.latitude},${location.longitude}")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ currentConditions ->
+                    currentWeatherCallback?.invoke(currentConditions)
                     updateUI(currentConditions)
                 })
     }
@@ -49,12 +51,12 @@ class CurrentWeatherFragment: InternetFragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        (context as? MainActivity)?.onGetLocationListener = ::onGetLocationFromActivity
+        (context as? MainActivity)?.onUpdateCurrentWeatherCallback = ::onGetLocationFromActivity
     }
 
     override fun onDetach() {
         super.onDetach()
-        (context as? MainActivity)?.onGetLocationListener = null
+        (context as? MainActivity)?.onUpdateCurrentWeatherCallback = null
     }
 
     override fun onResume() {
@@ -63,6 +65,7 @@ class CurrentWeatherFragment: InternetFragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ currentConditions ->
+                    currentWeatherCallback?.invoke(currentConditions)
                     updateUI(currentConditions)
                 })
     }

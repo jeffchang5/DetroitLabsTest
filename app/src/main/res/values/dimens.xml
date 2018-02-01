@@ -6,4 +6,6 @@
 
     <dimen name="current_weather_large">30sp</dimen>
     <dimen name="current_weather_small">20sp</dimen>
+
+    <dimen name="midsize">16sp</dimen>
 </resources>

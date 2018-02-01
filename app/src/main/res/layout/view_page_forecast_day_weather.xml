@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryDark">
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/view_page_first"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/view_page_second">
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/view_page_second"
+        android:layout_width="0dp"
+        android:background="@android:color/holo_blue_bright"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@id/view_page_first"
+        app:layout_constraintEnd_toStartOf="@id/view_page_third"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/view_page_third"
+        android:layout_width="0dp"
+        android:background="@android:color/white"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@id/view_page_second"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"/>
+</android.support.constraint.ConstraintLayout>

@@ -1,7 +1,5 @@
 package io.jeffchang.detroitlabschallenge.ui.now.currentweather
 
-import android.support.v4.content.ContextCompat
-import io.jeffchang.detroitlabschallenge.data.model.CurrentConditions
 import io.jeffchang.detroitlabschallenge.data.model.CurrentObservation
 import io.jeffchang.detroitlabschallenge.data.remote.WeatherUndergroundService
 import io.jeffchang.detroitlabschallenge.data.room.dao.CurrentObservationsDao
@@ -14,10 +12,11 @@ import timber.log.Timber
  */
 class CurrentWeatherRepository(private val weatherUndergroundService: WeatherUndergroundService,
                                private val currentObservationsDao: CurrentObservationsDao) {
-    fun getCurrentObservation(apiKey: String, latLong: String): Observable<CurrentObservation> {
+
+    fun getCurrentObservation(latLong: String): Observable<CurrentObservation> {
         return Observable.concatArray(
                 getCurrentWeatherFromDb(),
-                getCurrentWeatherFromApi(apiKey, latLong)
+                getCurrentWeatherFromApi(latLong)
             )
     }
 
@@ -25,13 +24,14 @@ class CurrentWeatherRepository(private val weatherUndergroundService: WeatherUnd
         return currentObservationsDao
                 .getCurrentObservation()
                 .toObservable()
-
     }
 
-    private fun getCurrentWeatherFromApi(apiKey: String, latLong: String): Observable<CurrentObservation> {
+    private fun getCurrentWeatherFromApi(latLong: String): Observable<CurrentObservation> {
         return weatherUndergroundService
-                .getCurrentConditions(apiKey, latLong)
-                .flatMap { currentConditions -> Observable.just(currentConditions.currentObservation) }
+                .getCurrentConditions(latLong)
+                .flatMap { currentConditions ->
+                    currentConditions.currentObservation.id = 1
+                    Observable.just(currentConditions.currentObservation) }
                 .doOnNext({ storeCurrentWeatherInDb(it)})
     }
 

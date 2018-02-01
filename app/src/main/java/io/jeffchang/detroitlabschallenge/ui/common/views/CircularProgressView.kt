@@ -1,17 +1,22 @@
 package io.jeffchang.detroitlabschallenge.ui.common.views
 
 import android.content.Context
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
+import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.widget.RelativeLayout
+import android.widget.TextView
 import io.jeffchang.detroitlabschallenge.R
-import kotlinx.android.synthetic.main.view_no_internet.view.*
+import kotlinx.android.synthetic.main.view_circular_progress.view.*
 
 /**
  * Created by jeffreychang on 1/29/18.
  */
-class NoInternetView: RelativeLayout  {
+class CircularProgressView : RelativeLayout {
+
+    var loadingText: String? = null
+        set(text) {
+            circular_progress_textview_loading.text = text
+        }
 
     constructor(context: Context): super(context) {
         init(context)
@@ -27,10 +32,6 @@ class NoInternetView: RelativeLayout  {
     }
 
     private fun init(context: Context) {
-        inflate(context, R.layout.view_no_internet, this)
-        val tryAgainSpan = SpannableString(no_internet_textview_try_again.text)
-        tryAgainSpan.setSpan(UnderlineSpan(), 0 , tryAgainSpan.length, 0)
-        no_internet_textview_try_again.text = tryAgainSpan
+        inflate(context, R.layout.view_circular_progress, this)
     }
-
 }

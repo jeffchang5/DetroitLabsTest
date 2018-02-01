@@ -25,16 +25,27 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
+    // Needed for getting location from Play Services
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var settingsClient: SettingsClient
     private lateinit var locationSettingsRequest: LocationSettingsRequest
     private lateinit var requestObject: PermissionUtil.PermissionRequestObject
+
+    // Manages if permission is requested between lifecycle state changes
+    private var requestingLocation = true
+
+    /*
+     * Prevents changing the view if it is already loaded. Also, prevents a crash from spamming the
+     * same button.
+    */
+
+    private var currentFragmentId: Int = -1
+
     private var locationDisposable: Disposable? = null
 
-    var onGetLocationListener: ((location: Location) -> Unit)? = null
+    var onUpdateCurrentWeatherCallback: ((location: Location) -> Unit)? = null
 
-
-    private var requestingLocation = true
+    var onForecastDayCallback: ((location: Location) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,21 +54,21 @@ class MainActivity : AppCompatActivity() {
 
         switchFragments(NowFragment.newInstance())
         activity_main_bottom_navigation.setOnNavigationItemSelectedListener({item ->
-            when (item.itemId) {
-                R.id.action_whatshot -> {
-                    switchFragments(NowFragment.newInstance())
-                    true
+            if (currentFragmentId != item.itemId) {
+                currentFragmentId = item.itemId
+                when (item.itemId) {
+                    R.id.action_whatshot -> {
+                        switchFragments(NowFragment.newInstance())
+                    }
+                    R.id.action_places -> {
+                        switchFragments(PlacesFragment.newInstance())
+                    }
+                    R.id.action_settings-> {
+                        switchFragments(SettingsFragment.newInstance())
+                    }
                 }
-                R.id.action_places -> {
-                    switchFragments(PlacesFragment.newInstance())
-                    true
-                }
-                R.id.action_settings-> {
-                    switchFragments(SettingsFragment.newInstance())
-                    true
-                }
-                else -> false
             }
+            true
         })
     }
 
@@ -113,8 +124,8 @@ class MainActivity : AppCompatActivity() {
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({ location ->
-                                Timber.d("HELLO")
-                                onGetLocationListener?.invoke(location)
+                                onUpdateCurrentWeatherCallback?.invoke(location)
+                                onForecastDayCallback?.invoke(location)
                             })
                 })
                 .addOnFailureListener { exception ->

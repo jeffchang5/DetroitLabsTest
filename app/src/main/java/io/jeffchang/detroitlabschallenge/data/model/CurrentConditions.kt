@@ -6,8 +6,8 @@ import android.arch.persistence.room.PrimaryKey
 import com.squareup.moshi.Json
 
 data class CurrentConditions(
-		@Json(name = "response") val response: Response,
-		@Json(name = "current_observation") val currentObservation: CurrentObservation
+        @Json(name = "response") val response: Response,
+        @Json(name = "current_observation") val currentObservation: CurrentObservation
 )
 
 data class Response(
@@ -105,7 +105,7 @@ data class DisplayLocation(
 		@Json(name = "elevation") val elevation: String
 )
 
-class Estimated()
+class Estimated
 
 data class ObservationLocation(
 		@Json(name = "full") val full: String,

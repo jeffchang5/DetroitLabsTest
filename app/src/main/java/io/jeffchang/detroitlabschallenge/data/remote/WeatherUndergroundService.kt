@@ -1,10 +1,10 @@
 package io.jeffchang.detroitlabschallenge.data.remote
 
+import io.jeffchang.detroitlabschallenge.data.model.CurrentConditions
+import io.jeffchang.detroitlabschallenge.data.model.TenDayWeather
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
-import com.squareup.moshi.Json
-import io.jeffchang.detroitlabschallenge.data.model.CurrentConditions
 
 
 /**
@@ -12,12 +12,14 @@ import io.jeffchang.detroitlabschallenge.data.model.CurrentConditions
  */
 interface WeatherUndergroundService {
 
-    @GET("{apiKey}/conditions/q/{latLong}.json")
-    fun getCurrentConditions(@Path("apiKey") apiKey: String,
-                             @Path("latLong") latLong: String): Observable<CurrentConditions>
+    @GET("conditions/q/{latLong}.json")
+    fun getCurrentConditions(@Path("latLong") latLong: String): Observable<CurrentConditions>
 
+    @GET("forecast10day/q/{latLong}.json")
+    fun getTenDayWeather(@Path("latLong") latLong: String): Observable<TenDayWeather>
 
     companion object {
         const val WEATHER_URL ="http://api.wunderground.com/api/"
     }
+
 }

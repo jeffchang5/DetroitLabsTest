@@ -7,6 +7,4 @@ import android.arch.persistence.room.Dao
  */
 
 @Dao
-interface LocationDao {
-
-}
+interface LocationDao

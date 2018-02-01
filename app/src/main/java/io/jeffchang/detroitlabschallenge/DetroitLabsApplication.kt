@@ -8,6 +8,8 @@ import io.jeffchang.detroitlabschallenge.data.remote.WeatherUndergroundService
 import io.jeffchang.detroitlabschallenge.data.room.WeatherDatabase
 import io.jeffchang.detroitlabschallenge.ui.now.currentweather.CurrentWeatherRepository
 import io.jeffchang.detroitlabschallenge.ui.now.currentweather.CurrentWeatherViewModel
+import io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.ForcastDayViewModel
+import io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.ForecastDayRepository
 import timber.log.Timber
 
 /**
@@ -15,16 +17,15 @@ import timber.log.Timber
  */
 
 class DetroitLabsApplication: Application() {
-
-
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
-            Stetho.initializeWithDefaults(this);
+            Stetho.initializeWithDefaults(this)
         }
+        val apiKey = getString(R.string.weather_underground_secret_key)
         val networkSingleton =
-                NetworkSingleton.getInstance(WeatherUndergroundService.WEATHER_URL)
+                NetworkSingleton.getInstance("${WeatherUndergroundService.WEATHER_URL}$apiKey/")
 
         weatherUndergroundService =
                 networkSingleton.getRetrofitService(WeatherUndergroundService::class.java)
@@ -35,14 +36,26 @@ class DetroitLabsApplication: Application() {
                 "weather-database")
                 .build()
 
+        currentWeatherRepository = CurrentWeatherRepository(
+                weatherUndergroundService,
+                weatherDatabase.currentObservationDao()
+        )
+        currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherRepository)
+
         currentWeatherRepository = CurrentWeatherRepository(weatherUndergroundService,
                 weatherDatabase.currentObservationDao()
         )
-
-        currentWeatherViewModel = CurrentWeatherViewModel(currentWeatherRepository)
+        forcastDayRepository = ForecastDayRepository(weatherUndergroundService,
+                weatherDatabase.forcastDayDao())
+        forcastDayViewModel = ForcastDayViewModel(forcastDayRepository)
     }
 
     companion object {
+
+        private lateinit var forcastDayRepository: ForecastDayRepository
+
+        private lateinit var forcastDayViewModel: ForcastDayViewModel
+
         private lateinit var currentWeatherRepository: CurrentWeatherRepository
 
         private lateinit var currentWeatherViewModel: CurrentWeatherViewModel
@@ -52,6 +65,8 @@ class DetroitLabsApplication: Application() {
         private lateinit var weatherDatabase: WeatherDatabase
 
         fun injectCurrentWeatherViewModel() = currentWeatherViewModel
+
+        fun injectForcastDayViewModel() = forcastDayViewModel
     }
 
 }
