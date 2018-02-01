@@ -1,6 +1,7 @@
 package io.jeffchang.detroitlabschallenge.ui.common
 
 import android.os.Bundle
+import android.support.annotation.IdRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,4 +47,5 @@ abstract class InternetFragment : BaseFragment() {
         parent.removeAllViews()
         parent.addView(childView)
     }
+
 }

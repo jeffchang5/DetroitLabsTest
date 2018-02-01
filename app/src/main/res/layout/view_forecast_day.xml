@@ -1,7 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?selectableItemBackgroundBorderless"
+    android:paddingTop="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <TextView
+        android:id="@+id/textview_dayoftheweek_forecast_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:textSize="@dimen/midsize"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        tools:text="Today"/>
+
+    <TextView
+        android:id="@+id/textview_date_forecast_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:textSize="@dimen/midsize"
+        android:textColor="@color/colorAccent"
+        tools:text="Feb 1"/>
+
+    <ImageView
+        android:id="@+id/imageview_weather_forecast_day"
+        android:layout_width="80dp"
+        android:layout_height="64dp"
+        android:contentDescription="@string/weather_icon"
+        tools:src="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textview_high_forecast_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/midsize"
+        android:textColor="@color/colorAccent"
+        tools:text="H: 50℃"/>
+
+    <TextView
+        android:id="@+id/textview_low_forecast_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:textSize="@dimen/midsize"
+        android:textColor="@color/colorAccent"
+        tools:text="L: 34℃"/>
+
+    <TextView
+        android:id="@+id/textview_condition_forecast_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:textSize="@dimen/large"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        tools:text="Clear"/>
 
 </LinearLayout>

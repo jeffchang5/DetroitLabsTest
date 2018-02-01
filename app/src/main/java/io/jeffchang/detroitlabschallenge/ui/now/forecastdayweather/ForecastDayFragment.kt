@@ -4,6 +4,8 @@ import android.content.Context
 import android.location.Location
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
+import com.pixelcan.inkpageindicator.InkPageIndicator
 import io.jeffchang.detroitlabschallenge.DetroitLabsApplication
 import io.jeffchang.detroitlabschallenge.MainActivity
 import io.jeffchang.detroitlabschallenge.R
@@ -53,7 +55,13 @@ class ForecastDayFragment : InternetFragment() {
 
     private fun updateUI(forecastDay: ForecastDaoObject) {
         loadMainContent()
-        (childView as ForecastDayViewPager).forecastDay = forecastDay
+        val viewPager: ForecastDayViewPager = (childView as LinearLayout)
+                .getChildAt(0) as ForecastDayViewPager
+        val indicator: InkPageIndicator = (childView as LinearLayout)
+                .getChildAt(1) as InkPageIndicator
+        viewPager.forecastDay = forecastDay
+        indicator.setViewPager(viewPager)
+
     }
 
     companion object {

@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import io.jeffchang.detroitlabschallenge.R
 import io.jeffchang.detroitlabschallenge.data.model.ForecastDaoObject
-import kotlinx.android.synthetic.main.viewpager_forecast_day_weather.view.*
-import timber.log.Timber
 
 /**
  * Created by jeffreychang on 1/31/18.
@@ -24,7 +22,6 @@ class ForecastDayViewPager(context: Context, attrs: AttributeSet?) : ViewPager(c
 
     private fun init(context: Context) {
         inflate(context, R.layout.viewpager_forecast_day_weather, this)
-        indicator_viewpager_ten_day_weather.setViewPager(this)
     }
 
     var forecastDay: ForecastDaoObject? = null
@@ -35,11 +32,41 @@ class ForecastDayViewPager(context: Context, attrs: AttributeSet?) : ViewPager(c
     private class ForecastDayPagerAdapter(val context: Context,
                                           val forecastDay: ForecastDaoObject?) : PagerAdapter() {
 
+        private var numberOfPages: Int = forecastDay?.forecastDay?.size!! / 3
+
+        private var pageModulo: Int = forecastDay?.forecastDay?.size!! % 3
+
+        init {
+            if (pageModulo % 3 != 0)
+                numberOfPages += 1
+        }
+
         override fun instantiateItem(collection: ViewGroup, position: Int): Any {
             val inflater = LayoutInflater.from(context)
-            val layout = inflater.inflate(R.layout.view_page_forecast_day_weather, collection, false) as ViewGroup
+            val layout = inflater.inflate(R.layout.view_page_forecast_day_weather,
+                    collection, false) as ViewGroup
             collection.addView(layout)
-            Timber.e(forecastDay?.forecastDay?.size!!.toString())
+            val multipleOfThree = position * 3
+
+            val forecastDayArrayList = ArrayList(forecastDay?.forecastDay!!)
+            val firstForecastDay = forecastDayArrayList[0]
+            firstForecastDay.date?.weekdayShort = "Today"
+            forecastDayArrayList[0] = firstForecastDay
+
+            val firstForecast: ForecastDayView = layout.findViewById(R.id.view_page_first)
+            val secondForecast: ForecastDayView = layout.findViewById(R.id.view_page_second)
+            val thirdForecast: ForecastDayView = layout.findViewById(R.id.view_page_third)
+            try {
+                firstForecast.forecastDay = forecastDayArrayList[multipleOfThree]
+                secondForecast.forecastDay = forecastDayArrayList[multipleOfThree + 1]
+                thirdForecast.forecastDay = forecastDayArrayList[multipleOfThree + 2]
+
+            } catch (error: IndexOutOfBoundsException) {
+
+                /* Avoids throwing when the position is out of bounds.
+                   Confused about how ViewPager handles its position   */
+            }
+
             return layout
         }
 
@@ -52,7 +79,7 @@ class ForecastDayViewPager(context: Context, attrs: AttributeSet?) : ViewPager(c
         }
 
         override fun getCount(): Int {
-            return forecastDay?.forecastDay?.size!!
+            return numberOfPages
         }
 
     }

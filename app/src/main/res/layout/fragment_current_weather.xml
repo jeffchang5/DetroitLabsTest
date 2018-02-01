@@ -26,11 +26,10 @@
         android:layout_height="36dp"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
-        android:background="@color/colorPrimaryDark"
+        android:contentDescription="@string/weather_icon"
         app:layout_constraintEnd_toEndOf="@id/current_weather_temp"
         app:layout_constraintStart_toStartOf="@id/current_weather_temp"
-        app:layout_constraintTop_toBottomOf="@+id/current_weather_temp"
-        tools:contentDescription="Weather Icon" />
+        app:layout_constraintTop_toBottomOf="@+id/current_weather_temp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/current_weather_city"

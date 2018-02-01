@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_now.*
  */
 
 class NowFragment: BaseFragment() {
+
     override var layoutResourceID: Int = R.layout.fragment_now
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

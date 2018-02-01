@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.views.ForecastDayViewPager
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/forecastday_weather_viewpager"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"/>
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+    <io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.views.ForecastDayViewPager
+        android:id="@+id/forecastday_weather_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <com.pixelcan.inkpageindicator.InkPageIndicator
+        android:id="@+id/forecast_day_viewpager_indictator"
+        android:padding="16dip"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:dotDiameter="8dp"
+        app:dotGap="8dp"
+        app:animationDuration="320"
+        app:pageIndicatorColor="@color/colorAccent"
+        app:currentPageIndicatorColor="@color/white"/>
+</LinearLayout>

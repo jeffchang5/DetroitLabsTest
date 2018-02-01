@@ -3,10 +3,10 @@ package io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
+import com.squareup.picasso.Picasso
 import io.jeffchang.detroitlabschallenge.R
 import io.jeffchang.detroitlabschallenge.data.model.ForecastDay
-import kotlinx.android.synthetic.main.view_circular_progress.view.*
+import kotlinx.android.synthetic.main.view_forecast_day.view.*
 
 /**
  * Created by jeffreychang on 2/1/18.
@@ -14,9 +14,23 @@ import kotlinx.android.synthetic.main.view_circular_progress.view.*
 class ForecastDayView: LinearLayout {
 
     var forecastDay: ForecastDay? = null
-        set(text) {
-            
+        set(forecastDay) {
+            updateUI(forecastDay)
         }
+
+    private fun updateUI(forecastDay: ForecastDay?) {
+        textview_dayoftheweek_forecast_day.text = forecastDay?.date?.weekdayShort
+        textview_dayoftheweek_forecast_day.text = forecastDay?.date?.weekdayShort
+        textview_date_forecast_day.text = String.format(resources.getString(R.string.date)
+                ,forecastDay?.date?.monthnameShort
+                ,forecastDay?.date?.day)
+        textview_high_forecast_day.text = String.format(resources.getString(R.string.high_temp_C),
+                forecastDay?.high?.celsius?.toInt())
+        textview_low_forecast_day.text = String.format(resources.getString(R.string.low_temp_C),
+                forecastDay?.low?.celsius?.toInt())
+        textview_condition_forecast_day.text = forecastDay?.conditions
+        Picasso.with(context).load(forecastDay?.iconUrl).into(imageview_weather_forecast_day)
+    }
 
     constructor(context: Context): super(context) {
         init(context)
