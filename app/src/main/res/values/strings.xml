@@ -19,6 +19,9 @@
     <string name="high_temp_F">H: %1$d℃</string>
     <string name="low_temp_C">L: %1$d℉</string>
     <string name="low_temp_F">L: %1$d℉</string>
+    <string name="temp_label_C">Temp: %1$s℃</string>
+    <string name="feelslike_label_C">Feels like %1$s℃</string>
+    <string name="week_date">%1$s, %2$s %3$s</string>
 
 
     <!-- Current Weather Fragment -->

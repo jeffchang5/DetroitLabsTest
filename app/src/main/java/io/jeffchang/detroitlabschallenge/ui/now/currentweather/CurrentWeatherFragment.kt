@@ -12,6 +12,7 @@ import io.jeffchang.detroitlabschallenge.ui.common.InternetFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_current_weather.*
+import java.net.UnknownHostException
 
 /**
  * Created by jeffreychang on 1/29/18.
@@ -25,27 +26,54 @@ class CurrentWeatherFragment: InternetFragment() {
 
     var currentWeatherCallback: ((currentObservation: CurrentObservation) -> Unit)? = null
 
+    private var isCurrentWeatherLoaded: Boolean = false
+
     private fun onGetLocationFromActivity(location: Location) {
-        currentWeatherViewModel
-                .getCurrentWeather("${location.latitude},${location.longitude}")
+        getCurrentWeather(location)
+    }
+
+    private fun getCurrentWeather(location: Location) {
+        if (!isCurrentWeatherLoaded) {
+            currentWeatherViewModel
+                    .getCurrentWeather("${location.latitude},${location.longitude}")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ currentConditions ->
+                        loadMainContent()
+                        currentWeatherCallback?.invoke(currentConditions)
+                        updateUI(currentConditions)
+                    }, { e ->
+                        if (e is UnknownHostException)
+                            loadNoInternet({ getCurrentWeather(location) }, 300)
+                    })
+        }
+    }
+
+    private fun getCachedCurrentWeather() {
+        currentWeatherViewModel.getCachedWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ currentConditions ->
+                    loadMainContent()
+                    isCurrentWeatherLoaded = true
                     currentWeatherCallback?.invoke(currentConditions)
                     updateUI(currentConditions)
+                },{ e ->
+                    if (e is UnknownHostException)
+                        loadNoInternet({ getCachedCurrentWeather() }, 300)
                 })
     }
 
     private fun updateUI(currentObservation: CurrentObservation?) {
         if (currentObservation != null) {
-            current_weather_temp.text =
+            textview_temp_current_weather.text =
                     String.format(getString(R.string.celsius), currentObservation.tempC?.toInt())
-            current_weather_city.text = currentObservation.displayLocation?.city
-            current_weather_wind_textview.text =
+            textview_city_current_weather.text = currentObservation.displayLocation?.city
+            textview_wind_current_weather.text =
                     String.format(getString(R.string.kph), currentObservation.windGustKph)
-            current_weather_rain_textview.text =
+            textview_rain_current_weather.text =
                     String.format(getString(R.string.percent), currentObservation.precip1hrIn)
-            Picasso.with(context).load(currentObservation.iconUrl).into(current_weather_icon)
+            Picasso.with(context).load(currentObservation.iconUrl).into(imageview_icon_current_weather)
         }
     }
 
@@ -61,13 +89,8 @@ class CurrentWeatherFragment: InternetFragment() {
 
     override fun onResume() {
         super.onResume()
-        currentWeatherViewModel.getCachedWeather()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ currentConditions ->
-                    currentWeatherCallback?.invoke(currentConditions)
-                    updateUI(currentConditions)
-                })
+        loadCircularProgressBar("Getting current weather.")
+        getCachedCurrentWeather()
     }
 
     companion object {

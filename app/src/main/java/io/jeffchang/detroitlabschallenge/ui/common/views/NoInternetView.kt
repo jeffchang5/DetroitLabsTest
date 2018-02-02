@@ -13,6 +13,12 @@ import kotlinx.android.synthetic.main.view_no_internet.view.*
  */
 class NoInternetView: RelativeLayout  {
 
+    var tryAgainCallback: (() -> Unit)? = null
+            set(callback) {
+                textview_try_again_no_internet.setOnClickListener({
+                    callback?.invoke()
+                })
+            }
     constructor(context: Context): super(context) {
         init(context)
     }
@@ -28,9 +34,9 @@ class NoInternetView: RelativeLayout  {
 
     private fun init(context: Context) {
         inflate(context, R.layout.view_no_internet, this)
-        val tryAgainSpan = SpannableString(no_internet_textview_try_again.text)
+        val tryAgainSpan = SpannableString(textview_try_again_no_internet.text)
         tryAgainSpan.setSpan(UnderlineSpan(), 0 , tryAgainSpan.length, 0)
-        no_internet_textview_try_again.text = tryAgainSpan
+        textview_try_again_no_internet.text = tryAgainSpan
     }
 
 }

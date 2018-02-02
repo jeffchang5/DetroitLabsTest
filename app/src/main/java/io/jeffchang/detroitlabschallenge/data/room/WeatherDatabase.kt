@@ -22,6 +22,6 @@ abstract class WeatherDatabase: RoomDatabase() {
 
     abstract fun currentObservationDao(): CurrentObservationsDao
 
-    abstract fun forcastDayDao(): ForecastDayDao
+    abstract fun forecastDayDao(): ForecastDayDao
 
 }

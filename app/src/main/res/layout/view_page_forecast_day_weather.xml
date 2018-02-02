@@ -5,26 +5,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark">
     <io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.views.ForecastDayView
-        android:id="@+id/view_page_first"
+        android:id="@+id/view_page_forecastday_first"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/view_page_second" />
+        app:layout_constraintEnd_toStartOf="@id/view_page_forecastday_second" />
 
     <io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.views.ForecastDayView
-        android:id="@+id/view_page_second"
+        android:id="@+id/view_page_forecastday_second"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@id/view_page_first"
-        app:layout_constraintEnd_toStartOf="@id/view_page_third"
+        app:layout_constraintStart_toEndOf="@id/view_page_forecastday_first"
+        app:layout_constraintEnd_toStartOf="@id/view_page_forecastday_third"
         app:layout_constraintHorizontal_weight="1"/>
 
     <io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.views.ForecastDayView
-        android:id="@+id/view_page_third"
+        android:id="@+id/view_page_forecastday_third"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@id/view_page_second"
+        app:layout_constraintStart_toEndOf="@id/view_page_forecastday_second"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"/>
 </android.support.constraint.ConstraintLayout>

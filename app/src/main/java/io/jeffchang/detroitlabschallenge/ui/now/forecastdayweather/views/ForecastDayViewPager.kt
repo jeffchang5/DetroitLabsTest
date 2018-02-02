@@ -9,12 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import io.jeffchang.detroitlabschallenge.R
 import io.jeffchang.detroitlabschallenge.data.model.ForecastDaoObject
+import io.jeffchang.detroitlabschallenge.data.model.LatLng
 
 /**
  * Created by jeffreychang on 1/31/18.
  */
 
 class ForecastDayViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context) {
+
+    var onForecastDayClicked: ((LatLng?,  weatherDate: String) -> Unit)? = null
+
+    var forecastDay: ForecastDaoObject? = null
+        set(forecastDayWeather) {
+            val forecastDayAdapter = ForecastDayPagerAdapter(context, forecastDayWeather)
+            forecastDayAdapter.onWeatherDayClicked = onForecastDayClicked
+            adapter = forecastDayAdapter
+        }
 
     constructor(context: Context): this(context, null) {
         init(context)
@@ -24,13 +34,10 @@ class ForecastDayViewPager(context: Context, attrs: AttributeSet?) : ViewPager(c
         inflate(context, R.layout.viewpager_forecast_day_weather, this)
     }
 
-    var forecastDay: ForecastDaoObject? = null
-        set(forecastDayWeather) {
-            adapter = ForecastDayPagerAdapter(context, forecastDayWeather)
-        }
-
     private class ForecastDayPagerAdapter(val context: Context,
                                           val forecastDay: ForecastDaoObject?) : PagerAdapter() {
+
+        var onWeatherDayClicked: ((LatLng?,  weatherDate: String) -> Unit)? = null
 
         private var numberOfPages: Int = forecastDay?.forecastDay?.size!! / 3
 
@@ -53,20 +60,40 @@ class ForecastDayViewPager(context: Context, attrs: AttributeSet?) : ViewPager(c
             firstForecastDay.date?.weekdayShort = "Today"
             forecastDayArrayList[0] = firstForecastDay
 
-            val firstForecast: ForecastDayView = layout.findViewById(R.id.view_page_first)
-            val secondForecast: ForecastDayView = layout.findViewById(R.id.view_page_second)
-            val thirdForecast: ForecastDayView = layout.findViewById(R.id.view_page_third)
+            val firstForecast: ForecastDayView = layout.findViewById(R.id.view_page_forecastday_first)
+            val secondForecast: ForecastDayView = layout.findViewById(R.id.view_page_forecastday_second)
+            val thirdForecast: ForecastDayView = layout.findViewById(R.id.view_page_forecastday_third)
+
             try {
                 firstForecast.forecastDay = forecastDayArrayList[multipleOfThree]
+                firstForecast.setOnClickListener({
+                    onWeatherDayClicked?.invoke(forecastDay.latLng,
+                            "${forecastDayArrayList[multipleOfThree].date?.month}," +
+                                    "${forecastDayArrayList[multipleOfThree].date?.day}," +
+                                    "${forecastDayArrayList[multipleOfThree].date?.year}"
+                            ) })
+
                 secondForecast.forecastDay = forecastDayArrayList[multipleOfThree + 1]
+                secondForecast.setOnClickListener({
+                    onWeatherDayClicked?.invoke(forecastDay.latLng,
+                    "${forecastDayArrayList[multipleOfThree + 1].date?.month}," +
+                    "${forecastDayArrayList[multipleOfThree + 1].date?.day}," +
+                            "${forecastDayArrayList[multipleOfThree + 1].date?.year}"
+                    ) })
+
                 thirdForecast.forecastDay = forecastDayArrayList[multipleOfThree + 2]
+                thirdForecast.setOnClickListener({
+                    onWeatherDayClicked?.invoke(forecastDay.latLng,
+                            "${forecastDayArrayList[multipleOfThree + 2].date?.month}," +
+                                    "${forecastDayArrayList[multipleOfThree + 2].date?.day}," +
+                                    "${forecastDayArrayList[multipleOfThree + 2].date?.year}"
+                    ) })
 
             } catch (error: IndexOutOfBoundsException) {
 
                 /* Avoids throwing when the position is out of bounds.
                    Confused about how ViewPager handles its position   */
             }
-
             return layout
         }
 
@@ -81,7 +108,5 @@ class ForecastDayViewPager(context: Context, attrs: AttributeSet?) : ViewPager(c
         override fun getCount(): Int {
             return numberOfPages
         }
-
     }
-
 }

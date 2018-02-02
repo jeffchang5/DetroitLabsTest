@@ -26,9 +26,9 @@ class NowFragment: BaseFragment() {
         main_activity_collapsing_toolbar.setExpandedTitleTypeface(montserrat)
         val currentWeatherFragment = CurrentWeatherFragment.newInstance()
         childFragmentManager.beginTransaction()
-                .replace(R.id.main_activity_current_weather,
+                .replace(R.id.current_weather_now,
                         currentWeatherFragment)
-                .replace(R.id.main_activity_forecastday_weather,
+                .replace(R.id.forecastday_weather_now,
                         ForecastDayFragment.newInstance())
                 .commit()
     }

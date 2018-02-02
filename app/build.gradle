@@ -38,6 +38,7 @@ dependencies {
     implementation 'pl.charmas.android:android-reactive-location2:2.1'
 
     // Retrofit related libraries
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation "com.squareup.retrofit2:converter-moshi:2.0.0"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'

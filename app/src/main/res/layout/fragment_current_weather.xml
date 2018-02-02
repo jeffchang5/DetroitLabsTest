@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="80dp"
-    android:background="@color/white">
+    android:background="@color/colorPrimaryDark">
 
     <TextView
-        android:id="@+id/current_weather_temp"
+        android:id="@+id/textview_temp_current_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:textSize="@dimen/toolbarExpandedFontSize"
-        app:layout_constraintEnd_toStartOf="@+id/current_weather_city"
+        app:layout_constraintEnd_toStartOf="@+id/textview_city_current_weather"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,32 +21,32 @@
         tools:text="11℃" />
 
     <ImageView
-        android:id="@+id/current_weather_icon"
+        android:id="@+id/imageview_icon_current_weather"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
         android:contentDescription="@string/weather_icon"
-        app:layout_constraintEnd_toEndOf="@id/current_weather_temp"
-        app:layout_constraintStart_toStartOf="@id/current_weather_temp"
-        app:layout_constraintTop_toBottomOf="@+id/current_weather_temp" />
+        app:layout_constraintEnd_toEndOf="@id/textview_temp_current_weather"
+        app:layout_constraintStart_toStartOf="@id/textview_temp_current_weather"
+        app:layout_constraintTop_toBottomOf="@+id/textview_temp_current_weather" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/current_weather_city"
+    <TextView
+        android:id="@+id/textview_city_current_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center"
         android:maxLines="1"
         android:textSize="@dimen/current_weather_large"
-        app:layout_constraintBottom_toBottomOf="@id/current_weather_icon"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_icon_current_weather"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/current_weather_temp"
-        app:layout_constraintTop_toTopOf="@id/current_weather_temp"
+        app:layout_constraintStart_toEndOf="@+id/textview_temp_current_weather"
+        app:layout_constraintTop_toTopOf="@id/textview_temp_current_weather"
         tools:text="Detroit" />
 
     <TextView
-        android:id="@+id/current_weather_wind_label"
+        android:id="@+id/textview_wind_label_current_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wind"
@@ -54,38 +54,37 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toStartOf="@+id/current_weather_temp_divider"
+        app:layout_constraintEnd_toStartOf="@+id/view_temp_divider_current_weather"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/current_weather_icon" />
+        app:layout_constraintTop_toBottomOf="@id/imageview_icon_current_weather" />
 
     <TextView
-        android:id="@+id/current_weather_wind_textview"
+        android:id="@+id/textview_wind_current_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/current_weather_small"
-        app:layout_constraintEnd_toEndOf="@+id/current_weather_wind_label"
+        app:layout_constraintEnd_toEndOf="@+id/textview_wind_label_current_weather"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/current_weather_wind_label"
-        app:layout_constraintTop_toBottomOf="@id/current_weather_wind_label"
+        app:layout_constraintStart_toStartOf="@id/textview_wind_label_current_weather"
+        app:layout_constraintTop_toBottomOf="@id/textview_wind_label_current_weather"
         tools:text="32kph"/>
 
     <View
-        android:id="@+id/current_weather_temp_divider"
+        android:id="@+id/view_temp_divider_current_weather"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/mute_grey"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-
-        app:layout_constraintEnd_toStartOf="@+id/current_weather_rain_label"
+        app:layout_constraintEnd_toStartOf="@+id/textview_rain_labelcurrent_weather"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/current_weather_wind_label"
-        app:layout_constraintTop_toTopOf="@id/current_weather_wind_label"
-        app:layout_constraintBottom_toBottomOf="@+id/current_weather_wind_textview"/>
+        app:layout_constraintStart_toEndOf="@+id/textview_wind_label_current_weather"
+        app:layout_constraintTop_toTopOf="@id/textview_wind_label_current_weather"
+        app:layout_constraintBottom_toBottomOf="@+id/textview_wind_current_weather"/>
 
     <TextView
-        android:id="@+id/current_weather_rain_label"
+        android:id="@+id/textview_rain_labelcurrent_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/rain"
@@ -94,16 +93,17 @@
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/current_weather_temp_divider"
-        app:layout_constraintTop_toTopOf="@id/current_weather_wind_label" />
+        app:layout_constraintStart_toEndOf="@+id/view_temp_divider_current_weather"
+        app:layout_constraintTop_toTopOf="@id/textview_wind_label_current_weather" />
+
     <TextView
-        android:id="@+id/current_weather_rain_textview"
+        android:id="@+id/textview_rain_current_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/current_weather_small"
-        app:layout_constraintEnd_toEndOf="@+id/current_weather_rain_label"
+        app:layout_constraintEnd_toEndOf="@+id/textview_rain_labelcurrent_weather"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/current_weather_rain_label"
-        app:layout_constraintTop_toBottomOf="@id/current_weather_rain_label"
+        app:layout_constraintStart_toStartOf="@id/textview_rain_labelcurrent_weather"
+        app:layout_constraintTop_toBottomOf="@id/textview_rain_labelcurrent_weather"
         tools:text="16%"/>
 </android.support.constraint.ConstraintLayout>

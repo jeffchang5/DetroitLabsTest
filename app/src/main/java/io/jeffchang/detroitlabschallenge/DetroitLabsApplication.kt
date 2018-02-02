@@ -10,6 +10,8 @@ import io.jeffchang.detroitlabschallenge.ui.now.currentweather.CurrentWeatherRep
 import io.jeffchang.detroitlabschallenge.ui.now.currentweather.CurrentWeatherViewModel
 import io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.ForcastDayViewModel
 import io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.ForecastDayRepository
+import io.jeffchang.detroitlabschallenge.ui.now.hourlyforecast.HourlyForecastRepository
+import io.jeffchang.detroitlabschallenge.ui.now.hourlyforecast.HourlyForecastViewModel
 import timber.log.Timber
 
 /**
@@ -45,20 +47,29 @@ class DetroitLabsApplication: Application() {
         currentWeatherRepository = CurrentWeatherRepository(weatherUndergroundService,
                 weatherDatabase.currentObservationDao()
         )
-        forcastDayRepository = ForecastDayRepository(weatherUndergroundService,
-                weatherDatabase.forcastDayDao())
-        forcastDayViewModel = ForcastDayViewModel(forcastDayRepository)
+        forecastDayRepository = ForecastDayRepository(weatherUndergroundService,
+                weatherDatabase.forecastDayDao())
+
+        forecastDayViewModel = ForcastDayViewModel(forecastDayRepository)
+
+        hourlyForecastRepository = HourlyForecastRepository(weatherUndergroundService)
+
+        hourlyForecastViewModel= HourlyForecastViewModel(hourlyForecastRepository)
     }
 
     companion object {
 
-        private lateinit var forcastDayRepository: ForecastDayRepository
+        private lateinit var forecastDayRepository: ForecastDayRepository
 
-        private lateinit var forcastDayViewModel: ForcastDayViewModel
+        private lateinit var forecastDayViewModel: ForcastDayViewModel
 
         private lateinit var currentWeatherRepository: CurrentWeatherRepository
 
         private lateinit var currentWeatherViewModel: CurrentWeatherViewModel
+
+        private lateinit var hourlyForecastRepository: HourlyForecastRepository
+
+        private lateinit var hourlyForecastViewModel: HourlyForecastViewModel
 
         private lateinit var weatherUndergroundService: WeatherUndergroundService
 
@@ -66,7 +77,9 @@ class DetroitLabsApplication: Application() {
 
         fun injectCurrentWeatherViewModel() = currentWeatherViewModel
 
-        fun injectForcastDayViewModel() = forcastDayViewModel
+        fun injectForcastDayViewModel() = forecastDayViewModel
+
+        fun injectHourlyForecastViewModel() = hourlyForecastViewModel
     }
 
 }

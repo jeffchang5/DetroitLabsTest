@@ -14,6 +14,7 @@ import com.google.android.gms.location.*
 import io.jeffchang.detroitlabschallenge.ui.now.NowFragment
 import io.jeffchang.detroitlabschallenge.ui.places.PlacesFragment
 import io.jeffchang.detroitlabschallenge.ui.settings.SettingsFragment
+import io.jeffchang.detroitlabschallenge.util.GooglePlayUtil
 import io.jeffchang.detroitlabschallenge.util.PermissionUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -52,19 +53,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupLocation()
 
-        switchFragments(NowFragment.newInstance())
+        replaceFragment(NowFragment.newInstance())
         activity_main_bottom_navigation.setOnNavigationItemSelectedListener({item ->
             if (currentFragmentId != item.itemId) {
                 currentFragmentId = item.itemId
                 when (item.itemId) {
                     R.id.action_whatshot -> {
-                        switchFragments(NowFragment.newInstance())
+                        replaceFragment(NowFragment.newInstance())
                     }
                     R.id.action_places -> {
-                        switchFragments(PlacesFragment.newInstance())
+                        replaceFragment(PlacesFragment.newInstance())
                     }
                     R.id.action_settings-> {
-                        switchFragments(SettingsFragment.newInstance())
+                        replaceFragment(SettingsFragment.newInstance())
                     }
                 }
             }
@@ -117,30 +118,31 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-        settingsClient.checkLocationSettings(locationSettingsRequest)
-                .addOnCompleteListener({
-                    val locationProvider = ReactiveLocationProvider(this)
-                    locationDisposable = locationProvider.getUpdatedLocation(locationRequest)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({ location ->
-                                onUpdateCurrentWeatherCallback?.invoke(location)
-                                onForecastDayCallback?.invoke(location)
-                            })
-                })
-                .addOnFailureListener { exception ->
-                    when ((exception as ApiException).statusCode) {
-                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                            try {
-                                (exception as ResolvableApiException)
-                                        .startResolutionForResult(this, REQUEST_CHECK_SETTINGS)
-                            } catch (sie: IntentSender.SendIntentException) {
-                                Timber.i("Failed to open settings")
-                            }
+        if (GooglePlayUtil.checkPlayServices(this))
+            settingsClient.checkLocationSettings(locationSettingsRequest)
+                    .addOnCompleteListener({
+                        val locationProvider = ReactiveLocationProvider(this)
+                        locationDisposable = locationProvider.getUpdatedLocation(locationRequest)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({ location ->
+                                    onUpdateCurrentWeatherCallback?.invoke(location)
+                                    onForecastDayCallback?.invoke(location)
+                                })
+                    })
+                    .addOnFailureListener { exception ->
+                        when ((exception as ApiException).statusCode) {
+                            LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                                try {
+                                    (exception as ResolvableApiException)
+                                            .startResolutionForResult(this, REQUEST_CHECK_SETTINGS)
+                                } catch (sie: IntentSender.SendIntentException) {
+                                    Timber.i("Failed to open settings")
+                                }
 
+                            }
                         }
                     }
-                }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -154,7 +156,13 @@ class MainActivity : AppCompatActivity() {
         locationDisposable?.dispose()
     }
 
-    private fun switchFragments(fragment: Fragment) {
+    fun replaceFragmentWithBackStack(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.activity_main_container, fragment)
+                .addToBackStack(null)
+                .commit()
+    }
+
+    fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.activity_main_container,
                 fragment).commit()
     }

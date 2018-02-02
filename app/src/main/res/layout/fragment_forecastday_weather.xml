@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary">
+
     <io.jeffchang.detroitlabschallenge.ui.now.forecastdayweather.views.ForecastDayViewPager
-        android:id="@+id/forecastday_weather_viewpager"
+        android:id="@+id/viewpager_forecastday_weather"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
     <com.pixelcan.inkpageindicator.InkPageIndicator
-        android:id="@+id/forecast_day_viewpager_indictator"
+        android:id="@+id/viewpager_indicator_forecast_day"
         android:padding="16dip"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"

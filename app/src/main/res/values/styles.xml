@@ -1,15 +1,18 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Disables the default ActionBar provided by Android and AppCompat -->
-
-
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
+    <style name="Dark.ThemeOverlay" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
     <style name="CustomExpandedAppBarTitle" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/toolbarExpandedFontSize</item>
     </style>
 

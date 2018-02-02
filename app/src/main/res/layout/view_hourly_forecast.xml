@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingTop="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@drawable/forecast_day_ripple">
+
+    <ImageView
+        android:id="@+id/imageview_icon_hourly_forecast"
+        android:layout_width="56dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/large"
+        android:contentDescription="@string/weather_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textview_hour_hourly_forecast"
+        app:layout_constraintStart_toStartOf="@+id/textview_hour_hourly_forecast"
+        app:layout_constraintTop_toBottomOf="@+id/textview_hour_hourly_forecast"
+        tools:src="@color/colorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/textview_temp_hourly_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/large"
+        app:layout_constraintBottom_toTopOf="@+id/textview_feelslike_hourly_forecast"
+        app:layout_constraintEnd_toStartOf="@+id/textview_condition_hourly_forecast"
+        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintStart_toEndOf="@+id/textview_hour_hourly_forecast"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="H: 45℃" />
+
+    <TextView
+        android:id="@+id/textview_hour_hourly_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/large"
+        app:layout_constraintBottom_toTopOf="@+id/imageview_icon_hourly_forecast"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="May 24, 2017" />
+
+    <TextView
+        android:id="@+id/textview_feelslike_hourly_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textview_temp_hourly_forecast"
+        app:layout_constraintTop_toBottomOf="@+id/textview_temp_hourly_forecast"
+        tools:text="L: 30℃" />
+
+    <TextView
+        android:id="@+id/textview_condition_hourly_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="@dimen/midsize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Sunny" />
+
+    <View
+        android:id="@+id/view_divider_hourly_forecast"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintTop_toBottomOf="@id/imageview_icon_hourly_forecast" />
+
+</android.support.constraint.ConstraintLayout>
